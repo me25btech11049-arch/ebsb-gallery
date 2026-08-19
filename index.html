@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EBSB IITH — Dynamic Event Gallery</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Animated Grand Curtain Overlay -->
+  <div id="curtain-overlay" class="curtain-overlay">
+    <div class="curtain curtain-left"></div>
+    <div class="curtain curtain-right"></div>
+    <div class="curtain-text">
+      <h2>EBSB IITH</h2>
+      <p>Welcome to the Cultural Showcase</p>
+    </div>
+  </div>
+
+  <!-- Background Glowing Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <!-- Header Section -->
+  <header>
+    <div class="hero-badge">Ek Bharat Shreshtha Bharat • IIT Hyderabad</div>
+    <h1>Cultural Showcase <span class="gradient-text">Gallery</span></h1>
+    <p>Celebrating the vibrant diversity, traditions, and arts across Indian states.</p>
+  </header>
+
+  <!-- Search Bar -->
+  <div class="search-box">
+    <input type="text" id="searchInput" onkeyup="searchGallery()" placeholder="🔍 Search...">
+  </div>
+
+  <!-- Interactive Filter Bar -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterGallery('all', event)">✨ All Events</button>
+    <button class="filter-btn" onclick="filterGallery('cultural', event)">🎭 Cultural Nights</button>
+    <button class="filter-btn" onclick="filterGallery('food', event)">🍲 Food Fests</button>
+    <button class="filter-btn" onclick="filterGallery('workshop', event)">🎨 Workshops</button>
+  </div>
+
+  <!-- Gallery Grid Container -->
+  <main class="gallery-grid">
+
+    <div class="card" data-category="cultural" onclick="openLightbox(this)">
+      <div class="badge">Cultural</div>
+      <div class="img-wrapper">
+        <img src="photo1.jpg" onerror="this.src='C:\\Users\\Sathwik\\OneDrive\\Desktop\\ebsb-gallery\\photo1.jpg.png'" alt="Cultural Night">
+      </div>
+      <div class="card-content">
+        <h3>Ek Bharat Cultural Night</h3>
+        <p>A mesmerizing evening featuring traditional dances, music, and stage performances.</p>
+      </div>
+    </div>
+
+    <div class="card" data-category="food" onclick="openLightbox(this)">
+      <div class="badge">Food Fest</div>
+      <div class="img-wrapper">
+        <img src="photo2.jpg" onerror="this.src='C:\\Users\\Sathwik\\OneDrive\\Desktop\\ebsb-gallery\\photo2.jpg.png'" alt="Regional Cuisine Fest">
+      </div>
+      <div class="card-content">
+        <h3>Flavors of India Festival</h3>
+        <p>Exploring authentic regional dishes cooked and presented by students.</p>
+      </div>
+    </div>
+
+    <div class="card" data-category="workshop" onclick="openLightbox(this)">
+      <div class="badge">Workshop</div>
+      <div class="img-wrapper">
+        <img src="photo3.jpg" onerror="this.src='C:\\Users\\Sathwik\\OneDrive\\Desktop\\ebsb-gallery\\photo3.jpg.png'" alt="Art & Craft Workshop">
+      </div>
+      <div class="card-content">
+        <h3>Heritage Art Workshop</h3>
+        <p>Hands-on session mastering traditional handicrafts, pottery, and painting styles.</p>
+      </div>
+    </div>
+
+    <div class="card" data-category="cultural" onclick="openLightbox(this)">
+      <div class="badge">Cultural</div>
+      <div class="img-wrapper">
+        <img src="photo4.jpg" onerror="this.src='C:\\Users\\Sathwik\\OneDrive\\Desktop\\ebsb-gallery\\photo4.jpg.png'" alt="Language Exchange">
+      </div>
+      <div class="card-content">
+        <h3>Language & Folk Sync</h3>
+        <p>Interactive group activities bridging linguistic diversity with interactive storytelling.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Image Lightbox Preview Modal -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="close-btn">&times;</span>
+    <img id="lightbox-img" src="" alt="Full Preview">
+    <div id="lightbox-caption"></div>
+  </div>
+
+
+
+  <!-- Single Unified Script -->
+  <script>
+    // 1. Curtain Opening Animation
+    setTimeout(function() {
+      var curtain = document.getElementById('curtain-overlay');
+      if (curtain) curtain.classList.add('open');
+    }, 600);
+
+    setTimeout(function() {
+      var curtain = document.getElementById('curtain-overlay');
+      if (curtain) curtain.style.display = 'none';
+    }, 1800);
+
+    // 2. Category Filter
+    function filterGallery(category, event) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      document.querySelectorAll('.card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.classList.remove('hide');
+        } else {
+          card.classList.add('hide');
+        }
+      });
+    }
+
+    // 3. Search Filter
+    function searchGallery() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('.card').forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(query)) {
+          card.classList.remove('hide');
+        } else {
+          card.classList.add('hide');
+        }
+      });
+    }
+
+    // 4. Lightbox View
+    function openLightbox(cardElement) {
+      const imgSrc = cardElement.querySelector('img').src;
+      const title = cardElement.querySelector('h3').innerText;
+      
+      document.getElementById('lightbox-img').src = imgSrc;
+      document.getElementById('lightbox-caption').innerText = title;
+      document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
